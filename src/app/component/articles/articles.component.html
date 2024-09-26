@@ -1,5 +1,14 @@
-<div *ngFor="let article of article$ | async">
-    <h2>{{article.Titre}}</h2>
-    <p>posté le: {{article.date}} par {{article.AuteurId}}</p>
-    <p>{{article.Contenu}}</p>
+<div>
+    <h2>créer un nouvel article</h2>
+    <input [(ngModel)]="newArticleTitle" placeholder="titre de votre article">
+    <input [(ngModel)]="newArticle" placeholder="votre article">
+    <button (click)="addUser()">Ajouter</button>
+</div>
+<div>
+    <h2>Listes des articles</h2>
+    <div *ngFor="let article of article$ | async">
+        <h3>{{article.Titre}}</h3>
+        <p>posté le: {{article.date | date:'short'}} par {{article.AuteurId}}</p>
+        <p>{{article.Contenu}}</p>
+    </div>
 </div>
