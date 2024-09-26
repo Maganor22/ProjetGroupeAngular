@@ -1,3 +1,75 @@
-div{
-    background-color: aliceblue;
+section{
+    width: 80vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1B2F33;
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+section div{
+margin-bottom: 1em;
+}
+h2{
+    color: #FFD8BE;
+}
+h2, h3{
+    text-transform: capitalize;
+}
+.posting{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+.form{
+   background-color: #FFD8BE;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 40%;
+   padding: 0.5em;
+   margin: 0.6em;
+}
+
+.posting input{
+    width: calc(100% - 0.5em);
+    margin-bottom: 0.5em;
+}
+button{
+    width: 15%;
+    height: 2em;
+    align-self: flex-end;
+}
+
+.form :nth-child(2){
+    height: 70px;
+}
+
+#articles{
+    /* background-color: #FED; */
+    /* padding: 0.5em; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.article{
+    background-color: #FFD8BE;
+    margin: 0.6em;
+    padding: 0.5em;
+    width: 80%;
+}
+.infos{
+    font-size: 0.8em;
+    /* transform: translateX(10px); */
+    margin-bottom: 0.5em;
+}
+.contenu{
+    font-size: 1.1em;
+    padding: 0.5em;
+    background-color: #FED;
+    text-align: justify;
+}
+span{
+    font-weight: bold;
 }
