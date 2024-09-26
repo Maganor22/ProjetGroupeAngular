@@ -1,6 +1,21 @@
-.boxMessage {
+.boxMessageUsers {
     background-color: grey;
     padding: 1rem;
     width: fit-content;
     margin: 1rem 0 1rem 0;
+}
+
+.boxMessage,
+.myBoxMessage {
+    padding: 1rem;
+    width: fit-content;
+    margin: 1rem 0 1rem 0;
+}
+
+.boxMessage {
+    background-color: #1b1f24;
+}
+
+.myBoxMessage {
+    background-color: #233d58;
 }
