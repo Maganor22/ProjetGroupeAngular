@@ -34,7 +34,7 @@ export class ArticlesComponent {
   addUser() {
     let today: number = Date.now();
     
-    if (this.newArticle.trim()) {
+    if (this.newArticle) {
       const articleCollection = collection(this.firestore, 'articles');
       addDoc(articleCollection, { Titre: this.newArticleTitle, Contenu: this.newArticle, date: today});
       this.newArticleTitle = '';
