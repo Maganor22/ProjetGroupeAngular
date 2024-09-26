@@ -20,7 +20,7 @@
           <h5 class="text-white">
             Message de {{ message.name }} à {{ message.receiverName }}
           </h5>
-          <em class="text-white">{{message.date}}</em>
+          <em class="text-white">{{message.date | date:'d/MMMM/yyyy, H:mm'}}</em>
           <p class="text-white">Message : {{ message.message }}</p>
         </div>
       </div>
