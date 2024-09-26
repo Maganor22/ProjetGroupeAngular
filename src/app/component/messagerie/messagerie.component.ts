@@ -35,7 +35,7 @@ export class MessagerieComponent {
   listUsers: User[] = [];
   listMessages: any[] = [];
   listMyMessages: any[] = [];
-  dayDate: Date = new Date();
+  dayDate: number = Date.now();
 
   myName: string = '';
 
