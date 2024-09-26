@@ -3,9 +3,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collectionData, collection, addDoc, deleteDoc, doc, Timestamp } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { AuthServiceService } from '../../services/auth-service.service';
+
+
+
 
 interface Article {
-  AuteurId: number;
+  Auteur: string;
   Titre: string;
   Contenu: string;
   date: number;
@@ -20,12 +24,20 @@ interface Article {
 })
 export class ArticlesComponent {
   private firestore: Firestore = inject(Firestore)
+  private authService: AuthServiceService = inject(AuthServiceService);
+
   article$: Observable<Article[]>;
   
-  
+  myName: string = '';
+
   constructor() {
     const articleCollection = collection(this.firestore, 'articles');
     this.article$ = collectionData(articleCollection,  { idField: 'id' }) as Observable<Article[]>
+  
+    const currentUser = this.authService.getUser();
+    if (currentUser) {
+      this.myName = currentUser;
+    }
   }
   
   newArticle = "";
@@ -36,7 +48,7 @@ export class ArticlesComponent {
     
     if (this.newArticle) {
       const articleCollection = collection(this.firestore, 'articles');
-      addDoc(articleCollection, { Titre: this.newArticleTitle, Contenu: this.newArticle, date: today});
+      addDoc(articleCollection, { Titre: this.newArticleTitle, Contenu: this.newArticle, date: today, Auteur: this.myName});
       this.newArticleTitle = '';
       this.newArticle = '';
     }

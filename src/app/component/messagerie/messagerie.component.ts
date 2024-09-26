@@ -18,6 +18,11 @@ interface User {
   password: string;
 }
 
+interface GroupedMessages {
+  user: string;
+  messages: any[];
+}
+
 @Component({
   selector: 'app-messagerie',
   standalone: true,
@@ -35,6 +40,7 @@ export class MessagerieComponent {
   listUsers: User[] = [];
   listMessages: any[] = [];
   listMyMessages: any[] = [];
+  groupedMessages: GroupedMessages[] = [];
   dayDate: number = Date.now();
 
   myName: string = '';
@@ -56,20 +62,45 @@ export class MessagerieComponent {
     this.loadMessages();
   }
 
-
   loadMessages() {
     const messagesCollection = collection(this.firestore, 'messages');
     const messages$ = collectionData(messagesCollection, { idField: 'id' }) as Observable<any[]>;
   
     messages$.subscribe((messages) => {
-      this.listMessages = messages;
+      // Trier les messages par date décroissante
+      this.listMessages = messages.sort((a, b) => b.date - a.date);
       
-      // Filtrer les messages envoyés par ou reçus par l'utilisateur connecté
-      this.listMyMessages = messages.filter(
-        (msg) => msg.receiverName === this.myName
+      // Filtrer les messages qui me concernent
+      this.listMyMessages = this.listMessages.filter(
+        (msg) => msg.receiverName === this.myName || msg.name === this.myName
       );
+      
+      // Regrouper et trier les messages par utilisateur
+      this.groupMessagesByUser();
     });
   }
+  
+  // Méthode pour regrouper les messages par utilisateur
+  groupMessagesByUser() {
+    const grouped = this.listMyMessages.reduce((acc, message) => {
+      const user = message.name === this.myName ? message.receiverName : message.name;
+  
+      if (!acc[user]) {
+        acc[user] = [];
+      }
+  
+      acc[user].push(message);
+      return acc;
+    }, {});
+  
+    // Transformer l'objet en tableau de GroupedMessages
+    this.groupedMessages = Object.keys(grouped).map(user => ({
+      user: user,
+      // Trier les messages de chaque utilisateur par date décroissante
+      messages: grouped[user].sort((a: any, b: any) => b.date - a.date)
+    }));
+  }
+
 
   getUsers() {
     this.users$.subscribe((users) => {
@@ -100,13 +131,13 @@ export class MessagerieComponent {
   }
 
   sendMessageUser(user: User) {
-    const currentUser = this.authService.getUser(); 
+    const currentUser = this.authService.getUser();
     if (currentUser == '') {
-      this.messageDisplay = "Veuillez vous connecter pour envoyer un message";
+      this.messageDisplay = 'Veuillez vous connecter pour envoyer un message';
       return;
     }
     this.messageDisplay = '';
-    
+
     if (this.userMessage == '') {
       this.messageDisplay = 'Veuillez remplir le champ message';
     } else {
