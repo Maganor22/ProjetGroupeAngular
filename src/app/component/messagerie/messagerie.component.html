@@ -16,13 +16,11 @@
         <p class="text-white">{{ messageDisplay }}</p>
       </div>
       <div class="col-9" *ngIf="myName !== ''">
-        <div *ngFor="let message of listMessages" class="boxMessage rounded">
-          <h5
-            class="text-white"
-            *ngIf="message.receiverName === myName || message.name === myName"
-          >
+        <div *ngFor="let message of listMyMessages" class="boxMessage rounded">
+          <h5 class="text-white">
             Message de {{ message.name }} à {{ message.receiverName }}
           </h5>
+          <em class="text-white">{{message.date}}</em>
           <p class="text-white">Message : {{ message.message }}</p>
         </div>
       </div>

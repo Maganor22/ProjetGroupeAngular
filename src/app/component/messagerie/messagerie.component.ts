@@ -35,6 +35,7 @@ export class MessagerieComponent {
   listUsers: User[] = [];
   listMessages: any[] = [];
   listMyMessages: any[] = [];
+  dayDate: Date = new Date();
 
   myName: string = '';
 
@@ -52,6 +53,22 @@ export class MessagerieComponent {
     this.getUsers();
     this.getAllMessages();
     this.getMyMessages();
+    this.loadMessages();
+  }
+
+
+  loadMessages() {
+    const messagesCollection = collection(this.firestore, 'messages');
+    const messages$ = collectionData(messagesCollection, { idField: 'id' }) as Observable<any[]>;
+  
+    messages$.subscribe((messages) => {
+      this.listMessages = messages;
+      
+      // Filtrer les messages envoyés par ou reçus par l'utilisateur connecté
+      this.listMyMessages = messages.filter(
+        (msg) => msg.receiverName === this.myName
+      );
+    });
   }
 
   getUsers() {
@@ -99,6 +116,7 @@ export class MessagerieComponent {
         name: currentUser,
         message: this.userMessage,
         receiverName: user.name,
+        date: this.dayDate,
       });
     }
   }
