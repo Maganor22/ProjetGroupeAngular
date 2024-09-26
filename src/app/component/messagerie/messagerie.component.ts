@@ -34,6 +34,7 @@ export class MessagerieComponent {
   userMessage: string = '';
   listUsers: User[] = [];
   listMessages: any[] = [];
+  listMyMessages: any[] = [];
 
   myName: string = '';
 
@@ -43,8 +44,14 @@ export class MessagerieComponent {
       idField: 'id',
     }) as Observable<User[]>;
 
+    const currentUser = this.authService.getUser();
+    if (currentUser) {
+      this.myName = currentUser;
+    }
+
     this.getUsers();
     this.getAllMessages();
+    this.getMyMessages();
   }
 
   getUsers() {
@@ -60,6 +67,17 @@ export class MessagerieComponent {
     }) as Observable<any[]>;
     messages.subscribe((messages) => {
       this.listMessages = messages;
+    });
+    return messages;
+  }
+
+  getMyMessages() {
+    const messagesCollection = collection(this.firestore, 'messages');
+    const messages = collectionData(messagesCollection, {
+      idField: 'id',
+    }) as Observable<any[]>;
+    messages.subscribe((messages) => {
+      this.listMyMessages = messages;
     });
     return messages;
   }

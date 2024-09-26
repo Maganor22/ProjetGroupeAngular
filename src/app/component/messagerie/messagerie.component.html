@@ -9,18 +9,22 @@
           </button>
         </div>
         <input
-        type="text"
-        [(ngModel)]="userMessage"
-        placeholder="Votre message"
+          type="text"
+          [(ngModel)]="userMessage"
+          placeholder="Votre message"
         />
         <p class="text-white">{{ messageDisplay }}</p>
-    </div>
-      <div class="col-9">
-        <ul *ngFor="let message of listMessages" class="boxMessage">
-            <h5 class="text-white">Message de {{ message.name }} à {{ message.receiverName }}</h5>
-            <li class="text-white">Message : {{ message.message }}</li>
-        </ul>
-        <p  class="text-white"></p>
+      </div>
+      <div class="col-9" *ngIf="myName !== ''">
+        <div *ngFor="let message of listMessages" class="boxMessage rounded">
+          <h5
+            class="text-white"
+            *ngIf="message.receiverName === myName || message.name === myName"
+          >
+            Message de {{ message.name }} à {{ message.receiverName }}
+          </h5>
+          <p class="text-white">Message : {{ message.message }}</p>
+        </div>
       </div>
     </div>
   </div>
