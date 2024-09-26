@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 
 interface User {
   id?: string;
-  name: string;  
+  name: string;
+  password: string;
 }
 
 @Component({
@@ -26,15 +27,10 @@ interface User {
     </ul>
 
     <h2>Connexion</h2>
-    <input [(ngModel)]="newUserName" placeholder="Nouvel utilisateur">
-    <input [(ngModel)]="newUserPassword" placeholder="Password">
-    <button (click)="addUser()">Ajouter</button>
-    <ul>
-      <li *ngFor="let user of users$ | async">
-        {{ user.name }}
-        <button (click)="deleteUser(user.id)">Supprimer</button>
-      </li>
-    </ul>
+    <input [(ngModel)]="userName" placeholder="Nouvel utilisateur">
+    <input [(ngModel)]="userPassword" placeholder="Password">
+    <button (click)="connectUser()">Se connecter</button>
+    <p>{{ message }}</p>
   `,
   styleUrl: './connexion.component.css'
 })
@@ -43,6 +39,9 @@ export class ConnexionComponent {
   users$: Observable<User[]>;
   newUserName = '';
   newUserPassword = '';
+  userName = '';
+  userPassword = '';
+  message: string = '';
 
   constructor() {
     const userCollection = collection(this.firestore, 'utilisateurs');
@@ -62,6 +61,21 @@ export class ConnexionComponent {
     if (userId) {
       const taskDocRef = doc(this.firestore, 'utilisateurs', userId);
       deleteDoc(taskDocRef);
+    }
+  }
+
+  connectUser() {
+    if (this.userName.trim()) {
+      const userCollection = collection(this.firestore, 'utilisateurs');
+      const users$ = collectionData(userCollection, { idField: 'id' }) as Observable<User[]>;
+      users$.subscribe(users => {
+        const user = users.find(u => u.name === this.userName && u.password === this.userPassword);
+        if (user) {
+          this.message = 'Connexion réussie';
+        } else {
+          this.message = 'Connexion échouée';
+        }
+      });
     }
   }
 }
