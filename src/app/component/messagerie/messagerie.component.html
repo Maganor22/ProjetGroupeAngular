@@ -1,0 +1,27 @@
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <div *ngFor="let user of listUsers">
+          <p class="text-white"><strong>Nom:</strong> {{ user.name }}</p>
+          <button (click)="sendMessageUser(user)">
+            Envoyer message à {{ user.name }}
+          </button>
+        </div>
+        <input
+        type="text"
+        [(ngModel)]="userMessage"
+        placeholder="Votre message"
+        />
+        <p class="text-white">{{ messageDisplay }}</p>
+    </div>
+      <div class="col-9">
+        <ul *ngFor="let message of listMessages" class="boxMessage">
+            <h5 class="text-white">Message de {{ message.name }} à {{ message.receiverName }}</h5>
+            <li class="text-white">Message : {{ message.message }}</li>
+        </ul>
+        <p  class="text-white"></p>
+      </div>
+    </div>
+  </div>
+</div>
