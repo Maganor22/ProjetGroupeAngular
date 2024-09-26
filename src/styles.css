@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #1b1f24;
+}
+
+.text-white {
+    color: white;
+}
+
+.rounded {
+    border-radius: 10px;
+}

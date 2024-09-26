@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collectionData, collection, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { AuthServiceService } from '../../services/auth-service.service';
 
 interface User {
   id?: string;
@@ -15,27 +16,29 @@ interface User {
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <h2>Crée un compte</h2>
+    <h2 class="text-white">Crée un compte</h2>
     <input [(ngModel)]="newUserName" placeholder="Nouvel utilisateur">
     <input [(ngModel)]="newUserPassword" placeholder="Password">
     <button (click)="addUser()">Ajouter</button>
     <ul>
-      <li *ngFor="let user of users$ | async">
+      <li *ngFor="let user of users$ | async" class="text-white">
         {{ user.name }}
         <button (click)="deleteUser(user.id)">Supprimer</button>
       </li>
     </ul>
 
-    <h2>Connexion</h2>
+    <h2 class="text-white">Connexion</h2>
     <input [(ngModel)]="userName" placeholder="Nouvel utilisateur">
     <input [(ngModel)]="userPassword" placeholder="Password">
     <button (click)="connectUser()">Se connecter</button>
-    <p>{{ message }}</p>
+    <p class="text-white">{{ message }}</p>
   `,
   styleUrl: './connexion.component.css'
 })
 export class ConnexionComponent {
   private firestore: Firestore = inject(Firestore);
+  private authService: AuthServiceService = inject(AuthServiceService);
+  
   users$: Observable<User[]>;
   newUserName = '';
   newUserPassword = '';
@@ -49,7 +52,7 @@ export class ConnexionComponent {
   }
 
   addUser() {
-    if (this.newUserName.trim()) {
+    if (this.newUserName != "" && this.newUserPassword != "") {
       const userCollection = collection(this.firestore, 'utilisateurs');
       addDoc(userCollection, { name: this.newUserName, password: this.newUserPassword });
       this.newUserName = '';
@@ -72,6 +75,7 @@ export class ConnexionComponent {
         const user = users.find(u => u.name === this.userName && u.password === this.userPassword);
         if (user) {
           this.message = 'Connexion réussie';
+          this.authService.setUser(this.userName);
         } else {
           this.message = 'Connexion échouée';
         }
