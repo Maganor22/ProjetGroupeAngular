@@ -1,29 +1,33 @@
 <div>
-  <div class="container">
-    <div class="row">
-      <div class="col-3">
-        <div *ngFor="let user of listUsers">
-          <p class="text-white"><strong>Nom:</strong> {{ user.name }}</p>
-          <button (click)="sendMessageUser(user)">
-            Envoyer message à {{ user.name }}
-          </button>
+    <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <div *ngFor="let user of listUsers">
+            <p class="text-white" *ngIf="user.name !== myName">
+              <strong>Nom:</strong> {{ user.name }}
+            </p>
+            <button *ngIf="user.name !== myName" (click)="sendMessageUser(user)">
+              Envoyer message à {{ user.name }}
+            </button>
+          </div>
+          <input
+            type="text"
+            [(ngModel)]="userMessage"
+            placeholder="Votre message"
+          />
+          <p class="text-white">{{ messageDisplay }}</p>
         </div>
-        <input
-          type="text"
-          [(ngModel)]="userMessage"
-          placeholder="Votre message"
-        />
-        <p class="text-white">{{ messageDisplay }}</p>
-      </div>
-      <div class="col-9" *ngIf="myName !== ''">
-        <div *ngFor="let message of listMyMessages" class="boxMessage rounded">
-          <h5 class="text-white">
-            Message de {{ message.name }} à {{ message.receiverName }}
-          </h5>
-          <em class="text-white">{{message.date | date:'d/MMMM/yyyy, H:mm'}}</em>
-          <p class="text-white">Message : {{ message.message }}</p>
+        <div class="col-9" *ngIf="myName !== ''">
+          <div *ngFor="let group of groupedMessages" class="boxMessageUsers rounded">
+            <h3 class="text-white">Messages avec {{ group.user }}</h3>
+  
+            <div *ngFor="let message of group.messages" [ngClass]="message.name == myName ? 'myBoxMessage' : 'boxMessage'" class="rounded">
+              <h4 class="text-white">Message de {{ message.name }}</h4>
+              <em class="text-white">{{ message.date | date: 'd/MM/yyyy, H:mm' }}</em>
+              <p class="text-white">Message : {{ message.message }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
