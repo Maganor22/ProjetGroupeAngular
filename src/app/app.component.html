@@ -1,1 +1,9 @@
-<app-connexion></app-connexion>
+<nav>
+    <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
+    <br>
+    <a [routerLink]="['/articles']">Articles</a>
+    <br>
+    <!-- <a [routerLink]="['/_ _ _']">_ _ _</a> -->
+</nav>
+<router-outlet></router-outlet>
+<!-- <app-connexion></app-connexion> -->

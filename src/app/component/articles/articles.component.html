@@ -1,1 +1,5 @@
-<p>articles works!</p>
+<div *ngFor="let article of article$ | async">
+    <h2>{{article.Titre}}</h2>
+    <p>posté le: {{article.date}} par {{article.AuteurId}}</p>
+    <p>{{article.Contenu}}</p>
+</div>
