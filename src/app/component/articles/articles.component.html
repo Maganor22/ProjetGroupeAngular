@@ -8,7 +8,7 @@
     <h2>Listes des articles</h2>
     <div *ngFor="let article of article$ | async">
         <h3>{{article.Titre}}</h3>
-        <p>posté le: {{article.date | date:'short'}} par {{article.AuteurId}}</p>
+        <p>posté le: {{article.date | date:'d/MMMM/yyyy, H:mm'}} par {{article.AuteurId}}</p>
         <p>{{article.Contenu}}</p>
     </div>
 </div>
