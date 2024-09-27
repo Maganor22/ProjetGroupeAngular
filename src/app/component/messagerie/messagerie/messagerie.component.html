@@ -1,31 +1,31 @@
-<div>
-    <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <div *ngFor="let user of listUsers">
-            <p class="text-white" *ngIf="user.name !== myName">
-              <strong>Nom:</strong> {{ user.name }}
-            </p>
-          </div>
-          <p class="text-white">{{ messageDisplay }}</p>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div *ngFor="let user of listUsers">
+        <p class="text-white" *ngIf="user.name !== myName" (click)="selectUser(user.name)" style="cursor: pointer;">
+          <strong>Nom:</strong> {{ user.name }}
+        </p>
+      </div>
+      <p class="text-white">{{ messageDisplay }}</p>
+    </div>
+    <p *ngIf="myName == ''" class="red">Veuillez vous connecter</p>
+    <div class="col-9" *ngIf="myName !== ''">
+      <div *ngIf="selectedUser" class="boxMessageUsers rounded">
+        <h3 class="text-white text-center">Conversation avec {{ selectedUser }}</h3>
+    
+        <div *ngFor="let message of getSelectedUserMessages()" 
+             [ngClass]="message.name == myName ? 'myBoxMessage' : 'boxMessage'" 
+             class="rounded">
+          <h4 class="text-white">{{ message.name }}</h4>
+          <em class="text-white">{{ message.date | date: 'd/MM/yyyy, H:mm' }}</em>
+          <p class="text-white mt-2">{{ message.message }}</p>
         </div>
-        <p *ngIf="myName == ''" class="red">Veuillez vous connecter</p>
-        <div class="col-9" *ngIf="myName !== ''">
-          <div *ngFor="let group of groupedMessages" class="boxMessageUsers rounded">
-            <h3 class="text-white text-center">Conversation avec {{ group.user }}</h3>
-        
-            <div *ngFor="let message of group.messages" [ngClass]="message.name == myName ? 'myBoxMessage' : 'boxMessage'" class="rounded">
-              <h4 class="text-white">{{ message.name }}</h4>
-              <em class="text-white">{{ message.date | date: 'd/MM/yyyy, H:mm' }}</em>
-              <p class="text-white mt-2">{{ message.message }}</p>
-            </div>
-        
-            <div>
-              <input type="text" [(ngModel)]="userMessage" placeholder="Votre message" class="rounded"/>
-              <button (click)="sendMessage(group.user)" class="rounded">Envoyer</button>
-            </div>
-          </div>
+    
+        <div class="d-flex justify-content-end">
+          <input type="text" [(ngModel)]="userMessage" placeholder="Votre message" class="rounded"/>
+          <button (click)="sendMessage()" class="rounded">Envoyer</button>
         </div>
       </div>
     </div>
   </div>
+</div>

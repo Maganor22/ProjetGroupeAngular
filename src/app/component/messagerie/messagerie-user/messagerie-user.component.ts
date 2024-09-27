@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './messagerie-user.component.html',
   styleUrl: './messagerie-user.component.css'
 })
-export class MessagerieUserComponent {
 
+export class MessagerieUserComponent {
+  name: string = ''; 
+  receiverName: string = '';
+
+  
 }
