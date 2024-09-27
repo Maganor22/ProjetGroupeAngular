@@ -4,26 +4,48 @@
     <div *ngIf="myName !== ''" class="boxUsers w-25">
       <h2 class="text-white mb-3 text-center">Vos amis</h2>
       <div *ngFor="let user of listUsers">
-        <p class="text-white userSolo" *ngIf="user.name !== myName" (click)="selectUser(user.name)" style="cursor: pointer;">
+        <p
+          class="text-white userSolo"
+          *ngIf="user.name !== myName"
+          (click)="selectUser(user.name)"
+          style="cursor: pointer"
+        >
           {{ user.name }}
         </p>
       </div>
       <p class="text-white">{{ messageDisplay }}</p>
     </div>
-    <div *ngIf="myName !== ''" class="boxMessageUsers rounded d-flex">
+    <div
+      #messageContainer
+      *ngIf="myName !== ''"
+      class="boxMessageUsers rounded d-flex message-container"
+    >
       <div *ngIf="selectedUser" class="w-100">
-        <h3 class="text-white text-center">Conversation avec {{ selectedUser }}</h3>
-    
-        <div *ngFor="let message of getSelectedUserMessages()" 
-             [ngClass]="message.name == myName ? 'myBoxMessage' : 'boxMessage'" 
-             class="rounded">
-          <h4 class="text-white">{{ message.name }}</h4>
-          <em class="text-white">{{ message.date | date: 'd/MM/yyyy, H:mm' }}</em>
+        <h3 class="text-white text-center">
+          Conversation avec {{ selectedUser }}
+        </h3>
+
+        <div
+          *ngFor="let message of getSelectedUserMessages()"
+          [ngClass]="message.name == myName ? 'myBoxMessage' : 'boxMessage'"
+          class="rounded"
+        >
+          <h4 class="text-white">
+            {{ message.name === myName ? "Vous" : message.name }}
+          </h4>
+          <em class="text-white">{{
+            message.date | date : "d/MM/yyyy, H:mm"
+          }}</em>
           <p class="text-white mt-2">{{ message.message }}</p>
         </div>
-    
-        <div class="d-flex justify-content-end">
-          <input type="text" [(ngModel)]="userMessage" (keyup.enter)="sendMessage()" placeholder="Votre message" class="rounded"/>
+        <div class="d-flex justify-content-end inputBoxDiv">
+          <input
+            type="text"
+            [(ngModel)]="userMessage"
+            (keyup.enter)="sendMessage()"
+            placeholder="Votre message"
+            class="rounded"
+          />
           <button (click)="sendMessage()" class="rounded">Envoyer</button>
         </div>
       </div>
