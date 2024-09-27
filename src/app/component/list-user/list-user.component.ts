@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Firestore, collectionData, collection, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { FriendService } from '../../services/friend.service';
+// import { FriendService } from '../../services/friend.service';
 
 interface User {
   id?: string;
@@ -20,7 +20,7 @@ interface User {
   <ul>
   <li *ngFor="let user of users$ | async">
     {{ user.name }}
-    <!-- <button (click)="addFriend(user.id)">Supprimer</button> -->
+    <button (click)="addFriend(user.id)">Suivre</button>
 
   </li>
 </ul>`,
@@ -30,11 +30,14 @@ export class ListUserComponent {
   private firestore: Firestore = inject(Firestore);
   users$: Observable<User[]>;
 
-  constructor(private friending: FriendService){
+  constructor(){
     const userCollection = collection(this.firestore, 'utilisateurs');
     this.users$ = collectionData(userCollection, { idField: 'id' }) as Observable<User[]>;
   }
 
-  // addFriend(userId){}
+  addFriend(userId:any){
+    const friendRequests = collection(this.firestore, 'friend-requests', userId);
+    addDoc(friendRequests, { User: this.users$});
+  }
 
 }
