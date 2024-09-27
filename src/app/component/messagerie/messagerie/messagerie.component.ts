@@ -6,8 +6,6 @@ import {
   collectionData,
   collection,
   addDoc,
-  deleteDoc,
-  doc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AuthServiceService } from '../../../services/auth-service.service';
@@ -18,9 +16,12 @@ interface User {
   password: string;
 }
 
-interface GroupedMessages {
-  user: string;
-  messages: any[];
+interface Message {
+  id?: string;
+  name: string;
+  receiverName: string;
+  message: string;
+  date: number;
 }
 
 @Component({
@@ -38,12 +39,10 @@ export class MessagerieComponent {
   messageDisplay: string = '';
   userMessage: string = '';
   listUsers: User[] = [];
-  listMessages: any[] = [];
-  listMyMessages: any[] = [];
-  groupedMessages: GroupedMessages[] = [];
-  dayDate: number = Date.now();
-
+  listMessages: Message[] = [];
+  dayDate: number = 0;
   myName: string = '';
+  selectedUser: string | null = null;
 
   constructor() {
     const userCollection = collection(this.firestore, 'utilisateurs');
@@ -57,50 +56,17 @@ export class MessagerieComponent {
     }
 
     this.getUsers();
-    this.getAllMessages();
-    this.getMyMessages();
     this.loadMessages();
   }
 
   loadMessages() {
     const messagesCollection = collection(this.firestore, 'messages');
-    const messages$ = collectionData(messagesCollection, { idField: 'id' }) as Observable<any[]>;
+    const messages$ = collectionData(messagesCollection, { idField: 'id' }) as Observable<Message[]>;
   
     messages$.subscribe((messages) => {
-      // Trier les messages par date décroissante
-      this.listMessages = messages.sort((a, b) => b.date - a.date);
-      
-      // Filtrer les messages qui me concernent
-      this.listMyMessages = this.listMessages.filter(
-        (msg) => msg.receiverName === this.myName || msg.name === this.myName
-      );
-      
-      // Regrouper et trier les messages par utilisateur
-      this.groupMessagesByUser();
+      this.listMessages = messages.sort((a, b) => a.date - b.date);
     });
   }
-  
-  // Méthode pour regrouper les messages par utilisateur
-  groupMessagesByUser() {
-    const grouped = this.listMyMessages.reduce((acc, message) => {
-      const user = message.name === this.myName ? message.receiverName : message.name;
-  
-      if (!acc[user]) {
-        acc[user] = [];
-      }
-  
-      acc[user].push(message);
-      return acc;
-    }, {});
-  
-    // Transformer l'objet en tableau de GroupedMessages
-    this.groupedMessages = Object.keys(grouped).map(user => ({
-      user: user,
-      // Trier les messages de chaque utilisateur par date décroissante
-      messages: grouped[user].sort((a: any, b: any) => b.date - a.date)
-    }));
-  }
-
 
   getUsers() {
     this.users$.subscribe((users) => {
@@ -108,51 +74,22 @@ export class MessagerieComponent {
     });
   }
 
-  getAllMessages() {
-    const messagesCollection = collection(this.firestore, 'messages');
-    const messages = collectionData(messagesCollection, {
-      idField: 'id',
-    }) as Observable<any[]>;
-    messages.subscribe((messages) => {
-      this.listMessages = messages;
-    });
-    return messages;
+  selectUser(user: string) {
+    this.selectedUser = user;
   }
 
-  getMyMessages() {
-    const messagesCollection = collection(this.firestore, 'messages');
-    const messages = collectionData(messagesCollection, {
-      idField: 'id',
-    }) as Observable<any[]>;
-    messages.subscribe((messages) => {
-      this.listMyMessages = messages;
-    });
-    return messages;
+  getSelectedUserMessages(): Message[] {
+    if (!this.selectedUser) return [];
+    return this.listMessages.filter(message => 
+      (message.name === this.selectedUser && message.receiverName === this.myName) ||
+      (message.name === this.myName && message.receiverName === this.selectedUser)
+    );
   }
 
-  // sendMessageUser(user: User) {
-  //   const currentUser = this.authService.getUser();
-  //   if (currentUser == '') {
-  //     this.messageDisplay = 'Veuillez vous connecter pour envoyer un message';
-  //     return;
-  //   }
-  //   this.messageDisplay = '';
+  sendMessage() {
+    if (!this.selectedUser) return;
 
-  //   if (this.userMessage == '') {
-  //     this.messageDisplay = 'Veuillez remplir le champ message';
-  //   } else {
-  //     this.messageDisplay = 'Message envoyé';
-  //     const userCollection = collection(this.firestore, 'messages');
-  //     addDoc(userCollection, {
-  //       name: currentUser,
-  //       message: this.userMessage,
-  //       receiverName: user.name,
-  //       date: this.dayDate,
-  //     });
-  //   }
-  // }
-
-  sendMessage(user: string) {
+    this.dayDate = Date.now();
     const currentUser = this.authService.getUser();
     if (currentUser == '') {
       this.messageDisplay = 'Veuillez vous connecter pour envoyer un message';
@@ -163,10 +100,10 @@ export class MessagerieComponent {
       addDoc(userCollection, {
         name: currentUser,
         message: this.userMessage,
-        receiverName: user,
+        receiverName: this.selectedUser,
         date: this.dayDate,
       });
-      this.userMessage = ''; // Réinitialiser le champ de message après l'envoi
+      this.userMessage = '';
     }
   }
 }

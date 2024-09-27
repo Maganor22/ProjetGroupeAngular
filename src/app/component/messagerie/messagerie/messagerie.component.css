@@ -5,6 +5,8 @@
     margin: 1rem 0 1rem 0;
     position: relative;
     left: 25%;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .boxMessage,
@@ -33,6 +35,12 @@ em {
 
 .mt-2 {
     margin-top: 0.5rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
 }
 
 
