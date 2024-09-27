@@ -15,24 +15,7 @@ interface User {
   selector: 'app-connexion',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  template: `
-    <h2 class="text-white">Crée un compte</h2>
-    <input [(ngModel)]="newUserName" placeholder="Nouvel utilisateur">
-    <input [(ngModel)]="newUserPassword" type="password" placeholder="Password">
-    <button (click)="addUser()">Ajouter</button>
-    <ul>
-      <li *ngFor="let user of users$ | async" class="text-white">
-        {{ user.name }}
-        <!-- <button (click)="deleteUser(user.id)">Supprimer</button> -->
-      </li>
-    </ul>
-
-    <h2 class="text-white">Connexion</h2>
-    <input [(ngModel)]="userName" placeholder="Pseudo">
-    <input [(ngModel)]="userPassword" type="password" placeholder="Password">
-    <button (click)="connectUser()">Se connecter</button>
-    <p class="text-white">{{ message }}</p>
-  `,
+  templateUrl: `./connexion.component.html`,
   styleUrl: './connexion.component.css'
 })
 export class ConnexionComponent {
