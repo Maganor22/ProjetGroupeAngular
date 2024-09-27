@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -31,7 +31,8 @@ interface Message {
   templateUrl: './messagerie.component.html',
   styleUrl: './messagerie.component.css',
 })
-export class MessagerieComponent {
+export class MessagerieComponent implements AfterViewChecked {
+  @ViewChild('messageContainer') private messageContainer!: ElementRef;
   private firestore: Firestore = inject(Firestore);
   private authService: AuthServiceService = inject(AuthServiceService);
 
@@ -57,6 +58,10 @@ export class MessagerieComponent {
 
     this.getUsers();
     this.loadMessages();
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
   }
 
   loadMessages() {
@@ -105,5 +110,11 @@ export class MessagerieComponent {
       });
       this.userMessage = '';
     }
+  }
+  
+  private scrollToBottom(): void {
+    try {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 }
