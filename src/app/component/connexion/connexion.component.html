@@ -1,16 +1,47 @@
-<h2 class="text-white">Crée un compte</h2>
-<input [(ngModel)]="newUserName" placeholder="Nouvel utilisateur">
-<input [(ngModel)]="newUserPassword" placeholder="Password">
-<button (click)="addUser()">Ajouter</button>
-<ul>
-  <li *ngFor="let user of users$ | async" class="text-white">
-    {{ user.name }}
-    <button (click)="deleteUser(user.id)">Supprimer</button>
-  </li>
-</ul>
+<div class="d-flex d-flex justify-content-center gap-3">
+  <div class="createAccount">
+    <div>
+      <h2 class="text-antiquewhite mb-3">Crée un compte</h2>
+      <p class="text-antiquewhite">Pseudo</p>
+      <input class="rounded-min mb-1" [(ngModel)]="newUserName" type="text" placeholder="Pseudo" />
+      <p class="text-antiquewhite">Mot de passe</p>
+      <input
+      class="rounded-min"
+        [(ngModel)]="newUserPassword"
+        type="password"
+        placeholder="Mot de passe"
+      />
+      <p class="mb-2"></p>
+      <button class="w-100 rounded-min" (click)="addUser()">Inscription</button>
+      <!-- <ul>
+        <li *ngFor="let user of users$ | async" class="text-antiquewhite">
+          {{ user.name }}
+         <button (click)="deleteUser(user.id)">Supprimer</button> 
+        </li>
+      </ul> -->
+    </div>
+  </div>
 
-<h2 class="text-white">Connexion</h2>
-<input [(ngModel)]="userName" placeholder="Nouvel utilisateur">
-<input [(ngModel)]="userPassword" placeholder="Password">
-<button (click)="connectUser()">Se connecter</button>
-<p class="text-white">{{ message }}</p>
+  <div class="connexion">
+    <div>
+      <h2 class="text-antiquewhite mb-3">Connexion</h2>
+      <p class="text-antiquewhite">Connexion</p>
+      <input
+      class="rounded-min mb-1"
+        [(ngModel)]="userName"
+        type="text"
+        placeholder="Pseudo"
+      />
+      <p class="text-antiquewhite">Mot de passe</p>
+      <input
+      class="rounded-min"
+        [(ngModel)]="userPassword"
+        type="password"
+        placeholder="Mot de passe"
+      />
+      <p class="mb-2"></p>
+      <button class="w-100 rounded-min" (click)="connectUser()">Se connecter</button>
+      <p class="text-antiquewhite">{{ message }}</p>
+    </div>
+  </div>
+</div>

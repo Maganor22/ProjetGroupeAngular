@@ -18,6 +18,7 @@ interface User {
   templateUrl: `./connexion.component.html`,
   styleUrl: './connexion.component.css'
 })
+
 export class ConnexionComponent {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthServiceService = inject(AuthServiceService);
