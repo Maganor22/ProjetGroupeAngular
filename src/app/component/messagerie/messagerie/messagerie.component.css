@@ -1,15 +1,17 @@
 .boxMessageUsers {
     background-color: grey;
     padding: 1rem;
-    width: fit-content;
+    width: 50%;
     margin: 1rem 0 1rem 0;
+    position: relative;
+    left: 25%;
 }
 
 .boxMessage,
 .myBoxMessage {
-    padding: 1rem;
+    padding: 0.7rem;
     width: fit-content;
-    margin: 1rem 0 1rem 0;
+    margin: 0.8rem 0 0.8rem 0;
 }
 
 .boxMessage {
@@ -18,4 +20,19 @@
 
 .myBoxMessage {
     background-color: #233d58;
+    margin-left: auto;
 }
+
+em {
+    font-size: 12px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+
