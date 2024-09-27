@@ -133,7 +133,8 @@ export class FriendlistComponent {
     deleteFriend(userId: string | undefined) {
     if (userId) {
       const userDocRef = doc(this.firestore, 'friendlist', userId);
-      updateDoc(userDocRef, {friend: ''});
+      deleteDoc(userDocRef);
+
     }
   }
 
