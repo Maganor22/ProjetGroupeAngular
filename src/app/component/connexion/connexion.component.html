@@ -1,31 +1,8 @@
 <div class="d-flex d-flex justify-content-center gap-3">
-  <div class="createAccount">
-    <div>
-      <h2 class="text-antiquewhite mb-3">Crée un compte</h2>
-      <p class="text-antiquewhite">Pseudo</p>
-      <input class="rounded-min mb-1" [(ngModel)]="newUserName" type="text" placeholder="Pseudo" />
-      <p class="text-antiquewhite">Mot de passe</p>
-      <input
-      class="rounded-min"
-        [(ngModel)]="newUserPassword"
-        type="password"
-        placeholder="Mot de passe"
-      />
-      <p class="mb-2"></p>
-      <button class="w-100 rounded-min" (click)="addUser()">Inscription</button>
-      <!-- <ul>
-        <li *ngFor="let user of users$ | async" class="text-antiquewhite">
-          {{ user.name }}
-         <button (click)="deleteUser(user.id)">Supprimer</button> 
-        </li>
-      </ul> -->
-    </div>
-  </div>
-
   <div class="connexion">
     <div>
       <h2 class="text-antiquewhite mb-3">Connexion</h2>
-      <p class="text-antiquewhite">Connexion</p>
+      <p class="text-antiquewhite">Pseudo</p>
       <input
       class="rounded-min mb-1"
         [(ngModel)]="userName"
@@ -40,8 +17,31 @@
         placeholder="Mot de passe"
       />
       <p class="mb-2"></p>
-      <button class="w-100 rounded-min" (click)="connectUser()">Se connecter</button>
+      <button class="w-100 rounded-min btnAntique" (click)="connectUser()">Se connecter</button>
       <p class="text-antiquewhite">{{ message }}</p>
+    </div>
+  </div>
+
+  <div class="createAccount">
+    <div>
+      <h2 class="text-blue mb-3">Créer un compte</h2>
+      <p class="text-blue">Pseudo</p>
+      <input class="rounded-min mb-1" [(ngModel)]="newUserName" type="text" placeholder="Pseudo" />
+      <p class="text-blue">Mot de passe</p>
+      <input
+      class="rounded-min"
+        [(ngModel)]="newUserPassword"
+        type="password"
+        placeholder="Mot de passe"
+      />
+      <p class="mb-2"></p>
+      <button class="w-100 rounded-min" (click)="addUser()">Inscription</button>
+      <!-- <ul>
+        <li *ngFor="let user of users$ | async" class="text-antiquewhite">
+          {{ user.name }}
+         <button (click)="deleteUser(user.id)">Supprimer</button> 
+        </li>
+      </ul> -->
     </div>
   </div>
 </div>
