@@ -1,14 +1,3 @@
-.boxMessageUsers {
-    background-color: grey;
-    padding: 1rem;
-    width: 50%;
-    margin: 1rem 0 1rem 0;
-    position: relative;
-    left: 25%;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
 .boxMessage,
 .myBoxMessage {
     padding: 0.7rem;
@@ -43,4 +32,46 @@ input[type="text"] {
     border-radius: 10px;
 }
 
+.container {
+    display: flex;
+    position: relative;
+    left: 15%;
+    width: 70%;
+  }
+  
+  .row {
+    display: flex;
+    flex-grow: 1;
+    
+  }
+  
+  .boxUsers {
+    background-color: #233d58;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 25%;
+    min-height: 80vh;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .boxMessageUsers {
+    background-color: grey;
+    padding: 1rem;
+    width: 75%;
+    border-radius: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 
+  .userSolo {
+    background-color: #1b1f24;
+    border-radius: 10px;
+    padding: 0.7rem;
+    margin: 0.5rem;
+  }
