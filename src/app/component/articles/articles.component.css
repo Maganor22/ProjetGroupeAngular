@@ -4,19 +4,20 @@
     --object-color-light: #FED;
 }
 
-section {
-    width: 80vw;
+section{
+    width: 100vw;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /*color: #eeeeee;*/
     color: var(--text-color);
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-section div {
+section div{
     margin-bottom: 1em;
     border-radius: 0.5em;
+
 }
 
 h2 {
@@ -35,7 +36,8 @@ h3 {
     width: 80%;
 }
 
-.form {
+.form{
+   /* background-color: #575757;*/
     background-color: var(--object-color);
     display: flex;
     flex-direction: column;
@@ -108,6 +110,7 @@ button:hover {
 .contenu {
     font-size: 1.1em;
     padding: 0.5em;
+    /* background-color: #575757;*/
     background-color: var(--object-color-light);
     text-align: justify;
     border-radius: 0.5em;

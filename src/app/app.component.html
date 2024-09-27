@@ -1,8 +1,19 @@
-<nav>
-    <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
-    <br>
-    <a [routerLink]="['/articles']">Articles</a>
-    <br>
-    <a [routerLink]="['/messagerie']">Messagerie</a>
-</nav>
-<router-outlet></router-outlet>
+<div class="container-app">
+    <div class="titleBar">
+        <img src="assets/logo.png" alt="">
+        <div class="separator"></div>
+    </div>
+
+    <div class="content">
+        <nav>
+            <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
+            <br>
+            <a [routerLink]="['/articles']">Articles</a>
+            <br>
+            <a [routerLink]="['/messagerie']">Messagerie</a>
+            <br>
+            <a [routerLink]="['/amis']">Liste d'amis</a>
+        </nav>
+        <router-outlet></router-outlet>  
+    </div>  
+</div>
