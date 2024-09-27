@@ -10,7 +10,7 @@ import {
   doc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { AuthServiceService } from '../../services/auth-service.service';
+import { AuthServiceService } from '../../../services/auth-service.service';
 
 interface User {
   id?: string;
@@ -130,25 +130,43 @@ export class MessagerieComponent {
     return messages;
   }
 
-  sendMessageUser(user: User) {
+  // sendMessageUser(user: User) {
+  //   const currentUser = this.authService.getUser();
+  //   if (currentUser == '') {
+  //     this.messageDisplay = 'Veuillez vous connecter pour envoyer un message';
+  //     return;
+  //   }
+  //   this.messageDisplay = '';
+
+  //   if (this.userMessage == '') {
+  //     this.messageDisplay = 'Veuillez remplir le champ message';
+  //   } else {
+  //     this.messageDisplay = 'Message envoyé';
+  //     const userCollection = collection(this.firestore, 'messages');
+  //     addDoc(userCollection, {
+  //       name: currentUser,
+  //       message: this.userMessage,
+  //       receiverName: user.name,
+  //       date: this.dayDate,
+  //     });
+  //   }
+  // }
+
+  sendMessage(user: string) {
     const currentUser = this.authService.getUser();
     if (currentUser == '') {
       this.messageDisplay = 'Veuillez vous connecter pour envoyer un message';
       return;
     }
-    this.messageDisplay = '';
-
-    if (this.userMessage == '') {
-      this.messageDisplay = 'Veuillez remplir le champ message';
-    } else {
-      this.messageDisplay = 'Message envoyé';
+    if (this.userMessage.trim() !== '') {
       const userCollection = collection(this.firestore, 'messages');
       addDoc(userCollection, {
         name: currentUser,
         message: this.userMessage,
-        receiverName: user.name,
+        receiverName: user,
         date: this.dayDate,
       });
+      this.userMessage = ''; // Réinitialiser le champ de message après l'envoi
     }
   }
 }
