@@ -52,9 +52,11 @@ h3 {
     margin-bottom: 0.5em;
 }
 
-button {
-    width: 15%;
+button{
     height: 2em;
+}
+.bouttonAjouter {
+    width: 15%;
     align-self: flex-end;
     color: var(--text-color);
     background-color: var(--object-color-light);
@@ -62,9 +64,34 @@ button {
     border-radius: 5px;
 }
 
-button:hover {
+.bouttonAjouter:hover {
     background-color: #008CBA;
     color: var(--object-color-light);
+}
+
+.jaimes{
+    justify-self: flex-start;
+    margin-top: 0.5em;
+    margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.bouttonLike{
+    margin-right: 0.5em;
+    width: 2em;
+    color: var(--text-color);
+    background-color: var(--object-color-light);
+    border: 2px solid #f44336;
+    border-radius: 5px;
+}
+.bouttonLike:hover{
+    background-color: #f44336;
+    opacity: 0.6;
+}
+.bouttonLike:active{
+    opacity: 1;
 }
 
 .bouttonSuppr {
