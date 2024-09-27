@@ -1,1 +1,9 @@
-<p>list-user works!</p>
+<h2>Liste d'utilisateur</h2>
+<!-- <div *ngFor="let user of users$></div> -->
+ <div *ngFor="let user of myUserList">
+    <p *ngIf="user.name !== myName">{{ user.name }}
+        <button (click)="addFriend(user); ">Suivre</button>
+    </p>
+
+
+ </div>
