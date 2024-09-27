@@ -3,16 +3,17 @@
         <h2>créer un nouvel article</h2>
         <div class="form">
             <input [(ngModel)]="newArticleTitle" placeholder="titre de votre article">
-            <input [(ngModel)]="newArticle" placeholder="votre article">
-            <button (click)="addUser()">Ajouter</button>
+            <textarea [(ngModel)]="newArticle" placeholder="votre article" rows="7"></textarea>
+            <button (click)="addArticle()">Ajouter</button>
         </div>
     </div>
     <div id="articles">
         <h2>Listes des articles</h2>
-        <div *ngFor="let article of article$ | async" class="article">
+        <div *ngFor="let article of listArticles" class="article">
             <h3>{{article.Titre}}</h3>
             <p class="infos">par <span *ngIf="article.Auteur">{{article.Auteur}}</span> {{article.date | date:'d/MMMM/yyyy, H:mm'}}</p>
-            <p class="contenu">{{article.Contenu}}</p>
+            <p class="contenu" style="white-space: pre-line">{{article.Contenu}}</p>
+            <button (click)="deleteArticle(article.id)" *ngIf="article.Auteur === myName" class="bouttonSuppr">Supprimer</button>
         </div>
     </div>
 </section>

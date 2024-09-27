@@ -1,3 +1,4 @@
+/*
 .container-app {
     width: 100svw;
     height: 100svh;
@@ -33,4 +34,23 @@ nav {
 .content {
     width: 95%;
     height: 100%;
+=======*/
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2vh;
+}
+nav a{
+    margin: 0.5em 1em;
+    color: antiquewhite;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+nav a:hover{
+    opacity: 0.5;
+    text-decoration: underline;
 }
