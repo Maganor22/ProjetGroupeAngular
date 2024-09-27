@@ -4,15 +4,17 @@ import { CommonModule } from '@angular/common';
 import { Firestore, collectionData, collection, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AuthServiceService } from '../../services/auth-service.service';
+import { FriendlistComponent } from '../friendlist/friendlist.component';
 // import { FriendService } from '../../services/friend.service';
 
 interface User {
-  id?: string;
+  id: number;
   name: string;  
+  friend: string;
 }
 
 interface Friend {
-  id?: string,
+  id: number;
   isFriend: boolean,
   name: string;  
 
@@ -50,31 +52,30 @@ export class ListUserComponent {
     if (currentUser) {
       this.myName = currentUser;
     }
+
     this.users$.subscribe((users) => {
       this.myUserList = users;
     });
-    
+
+
   }
 
-  // getUsers() {
-  //   this.users$.subscribe((users) => {
-  //     this.listUsers = users;
-  //   });
-  // }
 
-  
   
   addFriend(user: any){
     const currentUser = this.authService.getUser();
     const friendList = collection(this.firestore, 'friendlist');
+    const userList = collection(this.firestore, 'utilisateurs')
+    const users = collectionData(userList, 'utilisateurs')
     addDoc(friendList, {
       name: user.name,
       friend: currentUser,
     });
-    this.myUserList.forEach(u => {
-      this.myUserList.slice(user, 1)
-    });
-
+    for (let i = 0; i < users.length; i++) {
+      if (user.friend == this.myName ) {
+        this.myUserList.splice(user, 1);
+      }
+    }
 
   // getNoFriendsList(user: any) {
   //   
@@ -85,5 +86,48 @@ export class ListUserComponent {
     //     (user) => user.friend !== user.name
     //   );
     // });
+    }
+
+    // isFriend(){
+    //   const userCollection = collection(this.firestore, 'utilisateurs');
+    //   const users = collectionData(this.firestore, {
+    //     idField: 'id',
+    //   }) as Observable<any[]>;
+
+    //   const friendList = collection(this.firestore, 'friendlist');
+    //   const friends = collectionData(friendList, {
+    //     idField: 'id',
+    //   }) as Observable<any[]>;
+
+    //   friends.subscribe((friends) => {
+    //     this.friendList= friends;
+    //   })
+    //   friends.subscribe((users) => {
+    //     this.myUserList = users;
+    //     this.myUserList = this.friendList.filter((friend) => friend.friend !== this.myName )
+    //   });
+
+    //   console.log(this.myUserList);
+      
+    //   return this.myUserList;
+    // }
+
+    isFriend(){
+      const userCollection = collection(this.firestore, 'utilisateurs');
+      const users = collectionData(this.firestore, {
+        idField: 'id',
+      }) as Observable<any[]>;
+
+      const friendList = collection(this.firestore, 'friendlist');
+      const friends = collectionData(friendList, {
+        idField: 'id',
+      }) as Observable<any[]>;
+      friends.subscribe((friends) => {
+        this.myUserList = friends;
+        this.myUserList.map((friend) => friend.friend !== this.myName );
+      });
+      console.log(this.myUserList);
+      
+      return this.myUserList;
     }
 }

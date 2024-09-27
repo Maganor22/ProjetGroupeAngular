@@ -1,9 +1,15 @@
 <h2>Liste d'utilisateur</h2>
-<!-- <div *ngFor="let user of users$></div> -->
+<div  *ngIf="myName !== '' ">
+    <!-- <div *ngFor="let user of users$></div> -->
  <div *ngFor="let user of myUserList">
-    <p *ngIf="user.name !== myName">{{ user.name }}
-        <button (click)="addFriend(user); ">Suivre</button>
-    </p>
-
-
+    <div>
+        <p *ngIf="user.name !== myName">{{ user.name }}
+            <button (click)="addFriend(user)">Suivre</button>
+        </p>
+    </div>
  </div>
+</div>
+<p *ngIf="myName == '' ">Veuillez vous connecter</p>
+
+
+ 
