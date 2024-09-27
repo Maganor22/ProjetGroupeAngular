@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Firestore, collectionData, collection, addDoc, deleteDoc, doc, Timestamp } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, addDoc, deleteDoc, doc, updateDoc, arrayUnion, arrayRemove} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AuthServiceService } from '../../services/auth-service.service';
 
@@ -11,6 +11,7 @@ interface Article {
   Titre: string;
   Contenu: string;
   date: number;
+  like: string[];
 }
 
 @Component({
@@ -35,15 +36,24 @@ export class ArticlesComponent {
       this.myName = currentUser;
     }
 
-    this.sortArticles();
+    this.sortArticlesDate();
   }
 
-  sortArticles() {
+  sortArticlesDate() {
     const articleCollection = collection(this.firestore, 'articles');
     const articles$ = collectionData(articleCollection, { idField: 'id' }) as Observable<Article[]>
 
     articles$.subscribe((articles) => {
       this.listArticles = articles.sort((a, b) => b.date - a.date)
+    })
+  }
+
+  sortArticlesLike() {
+    const articleCollection = collection(this.firestore, 'articles');
+    const articles$ = collectionData(articleCollection, { idField: 'id' }) as Observable<Article[]>
+
+    articles$.subscribe((articles) => {
+      this.listArticles = articles.sort((a, b) => b.like?.length - a.like?.length)
     })
   }
 
@@ -58,6 +68,14 @@ export class ArticlesComponent {
       addDoc(articleCollection, { Titre: this.newArticleTitle, Contenu: this.newArticle, date: today, Auteur: this.myName });
       this.newArticleTitle = '';
       this.newArticle = '';
+    }
+  }
+
+  addLike(articleId: string | undefined) {
+    if (articleId) {
+      const taskDocRef = doc(this.firestore, 'articles', articleId);
+      updateDoc(taskDocRef, { like: arrayUnion(this.myName)});
+
     }
   }
 
