@@ -1,9 +1,18 @@
 .createAccount,
 .connexion {
-    background-color: grey;
+
     border-radius: 10px;
     padding: 1rem;
     width: fit-content;
+}
+
+.connexion {
+    background-color: #233d58;
+}
+
+.createAccount {
+    background-color: antiquewhite;
+    color: #1b1f24;
 }
 
 button {
@@ -14,4 +23,13 @@ button {
 button:hover {
     cursor: pointer;
     background-color: #1a2f3f;
+}
+
+.btnAntique {
+    background-color: antiquewhite;
+    color: #1b1f24;
+}
+
+.btnAntique:hover {
+    background-color: rgb(223, 204, 181);
 }

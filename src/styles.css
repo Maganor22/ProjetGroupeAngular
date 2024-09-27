@@ -11,6 +11,10 @@ body {
   color: antiquewhite;
 }
 
+.text-blue {
+  color: #1b1f24;
+}
+
 .rounded {
   border-radius: 10px;
 }
