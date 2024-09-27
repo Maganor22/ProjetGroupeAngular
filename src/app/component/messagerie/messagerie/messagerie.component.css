@@ -78,3 +78,7 @@ input[type="text"] {
 .inputBoxDiv {
     padding-bottom: 0.5rem;
 }
+
+button:hover {
+  cursor: pointer;
+}
