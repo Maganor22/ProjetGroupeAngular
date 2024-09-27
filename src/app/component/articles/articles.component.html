@@ -2,22 +2,28 @@
     <div class="posting" *ngIf="myName !== ''">
         <h2>créer un nouvel article</h2>
         <div class="form">
-            <input [(ngModel)]="newArticleTitle" placeholder="titre de votre article">
-            <textarea [(ngModel)]="newArticle" placeholder="votre article" rows="7"></textarea>
+            <input [(ngModel)]="newArticleTitle" placeholder="Titre de votre Article">
+            <textarea [(ngModel)]="newArticle" placeholder="Votre Article" rows="7"></textarea>
             <button (click)="addArticle()" class="bouttonAjouter">Ajouter</button>
         </div>
     </div>
     <div id="articles">
         <h2>Listes des articles</h2>
-        <button (click)="sortArticlesDate()">trier les articles par date</button>
-        <button (click)="sortArticlesLike()">trier les articles par nombre de likes</button>
+        <button (click)="sortArticlesDate()">Trier les articles par date</button>
+        <button (click)="sortArticlesLike()">Trier les articles par nombre de likes</button>
         <div *ngFor="let article of listArticles" class="article">
             <h3>{{article.Titre}}</h3>
-            <p class="infos">par <span *ngIf="article.Auteur">{{article.Auteur}}</span> le {{article.date | date:'d MMM yyyy à H:mm'}}</p>
-            <p class="contenu" style="white-space: pre-line">{{article.Contenu}}</p>
+            <p class="infos">
+                par <span *ngIf="article.Auteur">{{article.Auteur}}</span> le {{article.date | date:'d MMM yyyy à H:mm'}}
+            </p>
+            <p class="contenu" style="white-space: pre-line">
+                {{article.Contenu}}
+            </p>
             <div class="jaimes">
-                <button (click)="addLike(article.id)" class="bouttonLike" *ngIf="myName !== ''"></button>
-                <p *ngIf="article.like?.length">{{article.like?.length}} Likes</p>
+                <input type="checkbox" [id]="article.id" *ngIf="myName !== ''" [checked]="isChecked" (change)="onCheckboxChange($event, article.id)">
+                <label [for]="article.id" *ngIf="article.like?.length">
+                    {{article.like?.length}} Likes
+                </label>
             </div>
             <button (click)="deleteArticle(article.id)" *ngIf="article.Auteur === myName" class="bouttonSuppr">Supprimer</button>
         </div>
