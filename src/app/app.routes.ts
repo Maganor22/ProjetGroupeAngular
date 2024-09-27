@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ConnexionComponent } from './component/connexion/connexion.component';
 import { ArticlesComponent } from './component/articles/articles.component';
-import { MessagerieComponent } from './component/messagerie/messagerie.component';
+import { MessagerieComponent } from './component/messagerie/messagerie/messagerie.component';
 import { FriendlistComponent } from './component/friendlist/friendlist.component';
 
 // import { _ _ _Component } from './component/_ _ _/_ _ _.component';

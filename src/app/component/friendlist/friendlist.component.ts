@@ -134,6 +134,7 @@ export class FriendlistComponent {
     if (userId) {
       const userDocRef = doc(this.firestore, 'friendlist', userId);
       updateDoc(userDocRef, {friend: ''});
+
     }
   }
 

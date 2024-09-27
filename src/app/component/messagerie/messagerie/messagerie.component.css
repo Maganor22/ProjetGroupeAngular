@@ -1,0 +1,77 @@
+.boxMessage,
+.myBoxMessage {
+    padding: 0.7rem;
+    width: fit-content;
+    margin: 0.8rem 0 0.8rem 0;
+}
+
+.boxMessage {
+    background-color: #1b1f24;
+}
+
+.myBoxMessage {
+    background-color: #233d58;
+    margin-left: auto;
+}
+
+em {
+    font-size: 12px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.container {
+    display: flex;
+    position: relative;
+    left: 15%;
+    width: 70%;
+  }
+  
+  .row {
+    display: flex;
+    flex-grow: 1;
+    
+  }
+  
+  .boxUsers {
+    background-color: #233d58;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 25%;
+    min-height: 80vh;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .boxMessageUsers {
+    background-color: grey;
+    padding: 1rem;
+    width: 75%;
+    border-radius: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .userSolo {
+    background-color: #1b1f24;
+    border-radius: 10px;
+    padding: 0.7rem;
+    margin: 0.5rem;
+  }

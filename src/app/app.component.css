@@ -1,36 +1,18 @@
-.container-app {
-    width: 100svw;
-    height: 100svh;
-    background-color: #3D3D3D;
-    overflow: hidden;
-
-}
-
-.titleBar {
-    height: 100px;
-    width: 100%;
+nav{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    margin: 2vh;
+}
+nav a{
+    margin: 0.5em 1em;
+    color: antiquewhite;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5em;
+    text-decoration: none;
 }
 
-.titleBar img {
-    width: 200px;
-}
-
-.separator {
-    margin-top: 10px;
-    width: 95%;
-    height: 3px;
-    background-color: #575757;
-    border-radius: 3px;
-}
-
-nav {
-    display: flex;
-}
-.content {
-    width: 95%;
-    height: 100%;
+nav a:hover{
+    opacity: 0.5;
+    text-decoration: underline;
 }

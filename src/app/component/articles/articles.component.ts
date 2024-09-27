@@ -5,10 +5,8 @@ import { Firestore, collectionData, collection, addDoc, deleteDoc, doc, Timestam
 import { Observable } from 'rxjs';
 import { AuthServiceService } from '../../services/auth-service.service';
 
-
-
-
 interface Article {
+  id?: string;
   Auteur: string;
   Titre: string;
   Contenu: string;
@@ -26,38 +24,47 @@ export class ArticlesComponent {
   private firestore: Firestore = inject(Firestore)
   private authService: AuthServiceService = inject(AuthServiceService);
 
-  article$: Observable<Article[]>;
-  
   myName: string = '';
+  listArticles: any[] = [];
+  sortedArticles: any[] = [];
 
   constructor() {
     const articleCollection = collection(this.firestore, 'articles');
-    this.article$ = collectionData(articleCollection,  { idField: 'id' }) as Observable<Article[]>
-  
     const currentUser = this.authService.getUser();
     if (currentUser) {
       this.myName = currentUser;
     }
+
+    this.sortArticles();
   }
-  
+
+  sortArticles() {
+    const articleCollection = collection(this.firestore, 'articles');
+    const articles$ = collectionData(articleCollection, { idField: 'id' }) as Observable<Article[]>
+
+    articles$.subscribe((articles) => {
+      this.listArticles = articles.sort((a, b) => b.date - a.date)
+    })
+  }
+
   newArticle = "";
   newArticleTitle = "";
-  
-  addUser() {
+
+  addArticle() {
     let today: number = Date.now();
-    
+
     if (this.newArticle) {
       const articleCollection = collection(this.firestore, 'articles');
-      addDoc(articleCollection, { Titre: this.newArticleTitle, Contenu: this.newArticle, date: today, Auteur: this.myName});
+      addDoc(articleCollection, { Titre: this.newArticleTitle, Contenu: this.newArticle, date: today, Auteur: this.myName });
       this.newArticleTitle = '';
       this.newArticle = '';
     }
   }
 
-  // deleteUser(userId: string | undefined) {
-  //   if (userId) {
-  //     const taskDocRef = doc(this.firestore, 'utilisateurs', userId);
-  //     deleteDoc(taskDocRef);
-  //   }
-  // }
+  deleteArticle(articleId: string | undefined) {
+    if (articleId) {
+      const taskDocRef = doc(this.firestore, 'articles', articleId);
+      deleteDoc(taskDocRef);
+    }
+  }
 }
