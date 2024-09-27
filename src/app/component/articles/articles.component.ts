@@ -11,6 +11,7 @@ interface Article {
   Titre: string;
   Contenu: string;
   date: number;
+  like: number;
 }
 
 @Component({
@@ -35,15 +36,23 @@ export class ArticlesComponent {
       this.myName = currentUser;
     }
 
-    this.sortArticles();
+    this.sortArticlesDate();
   }
 
-  sortArticles() {
+  sortArticlesDate() {
     const articleCollection = collection(this.firestore, 'articles');
     const articles$ = collectionData(articleCollection, { idField: 'id' }) as Observable<Article[]>
 
     articles$.subscribe((articles) => {
       this.listArticles = articles.sort((a, b) => b.date - a.date)
+    })
+  }
+  sortArticlesLike() {
+    const articleCollection = collection(this.firestore, 'articles');
+    const articles$ = collectionData(articleCollection, { idField: 'id' }) as Observable<Article[]>
+
+    articles$.subscribe((articles) => {
+      this.listArticles = articles.sort((a, b) => a.like - b.like)
     })
   }
 
@@ -60,6 +69,14 @@ export class ArticlesComponent {
       this.newArticle = '';
     }
   }
+
+  // addLike(articleId: string | undefined) {
+  //   if (articleId) {
+  //     const taskDocRef = doc(this.firestore, 'articles', articleId);
+  //     addDoc(taskDocRef, { Titre: this.newArticleTitle, Contenu: this.newArticle, date: today, Auteur: this.myName });
+
+  //   }
+  // }
 
   deleteArticle(articleId: string | undefined) {
     if (articleId) {

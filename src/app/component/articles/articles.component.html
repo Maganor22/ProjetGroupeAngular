@@ -11,7 +11,7 @@
         <h2>Listes des articles</h2>
         <div *ngFor="let article of listArticles" class="article">
             <h3>{{article.Titre}}</h3>
-            <p class="infos">par <span *ngIf="article.Auteur">{{article.Auteur}}</span> {{article.date | date:'d/MMMM/yyyy, H:mm'}}</p>
+            <p class="infos">par <span *ngIf="article.Auteur">{{article.Auteur}}</span> le {{article.date | date:'d MMM yyyy à H:mm'}}</p>
             <p class="contenu" style="white-space: pre-line">{{article.Contenu}}</p>
             <button (click)="deleteArticle(article.id)" *ngIf="article.Auteur === myName" class="bouttonSuppr">Supprimer</button>
         </div>
